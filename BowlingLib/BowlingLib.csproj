@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountabilityInterfacesLib\AccountabilityInterfacesLib.csproj" />
+    <ProjectReference Include="..\AccountabilityLib\AccountabilityLib.csproj" />
+    <ProjectReference Include="..\AccountInterfacesLib2\AccountInterfacesLib.csproj" />
+    <ProjectReference Include="..\AccountLib2\AccountLib.csproj" />
+    <ProjectReference Include="..\BowlingDbLib\BowlingDbLib.csproj" />
+    <ProjectReference Include="..\BowlingInterfacesLib\BowlingInterfacesLib.csproj" />
+    <ProjectReference Include="..\FacotryLib\FactoryLib.csproj" />
+    <ProjectReference Include="..\FactoryExtensionsLib\FactoryExtensionsLib.csproj" />
+  </ItemGroup>
+
+</Project>

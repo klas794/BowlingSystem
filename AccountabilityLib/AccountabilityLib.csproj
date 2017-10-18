@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountLib2\AccountLib.csproj" />
+    <ProjectReference Include="..\FacotryLib\FactoryLib.csproj" />
+    <ProjectReference Include="..\MeasurementLib\MeasurementLib.csproj" />
+  </ItemGroup>
+
+</Project>
