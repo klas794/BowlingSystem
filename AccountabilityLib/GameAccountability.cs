@@ -7,7 +7,14 @@ namespace AccountabilityLib
 {
     public class GameAccountability
     {
+        public GameAccountability()
+        {
+            GameGuid = Guid.NewGuid();
+        }
+
         public int GameAccountabilityId { get; set; }
+
+        public Guid GameGuid { get; set; }
 
         public PlayerParty Winner { get; set; }
 
@@ -19,6 +26,8 @@ namespace AccountabilityLib
         public DateTime TimePoint { get; set; }
 
         public List<Round> Rounds { get; set; }
+
+        public Lane Lane { get; set; }
 
     }
 }

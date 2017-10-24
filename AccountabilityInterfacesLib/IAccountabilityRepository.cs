@@ -18,6 +18,8 @@ namespace AccountabilityInterfacesLib
 
         List<Competition> AllCompetitions();
 
-        Competition GetCompetition(int competitionId);
+        Competition GetCompetition(Guid competitionGuid);
+
+        void StoreGameRound(Round round);
     }
 }

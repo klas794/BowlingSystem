@@ -54,14 +54,6 @@ namespace AccountabilityLib
             _context.Update(player);
         }
 
-        public void StoreGameRound(Round round)
-        {
-            _context.Add(round.WinnerSerie);
-            _context.Add(round.LooserSerie);
-            _context.Add(round.WinnerSerie.Score);
-            _context.Add(round.LooserSerie.Score);
-            _context.Add(round);
-        }
 
         public PlayerParty GetPlayerParty(int playerPartyId)
         {

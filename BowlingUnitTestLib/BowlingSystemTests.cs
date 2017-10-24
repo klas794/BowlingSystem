@@ -20,7 +20,7 @@ namespace BowlingUnitTestLib
         {
 
             _serviceProvider = new ServiceCollection()
-                .AddTransient<IBowlingSystem, BowlingSystem>()
+                .AddTransient<BowlingSystem>()
                 .AddTransient<IPartyRepository, FakePartyRepository>()
                 .AddTransient<IAccountabilityRepository, FakeAccountabilityRepository>()
                 .AddTransient<IAccountRepository, FakeAccountRepository>()
@@ -30,7 +30,7 @@ namespace BowlingUnitTestLib
         [Fact]
         public void WinnerOfYear()
         {
-            var sut = _serviceProvider.GetService<IBowlingSystem>();
+            var sut = _serviceProvider.GetService<BowlingSystem>();
 
             var player1 = sut.CreatePlayer("Kalle Kallesson", "710101-1111");
             var player2 = sut.CreatePlayer("Olle Ollesson", "810606-2222");
@@ -45,19 +45,14 @@ namespace BowlingUnitTestLib
         [Fact]
         public void LaneFactoryWorks()
         {
-            var sut = _serviceProvider.GetService<IBowlingSystem>();
+            var sut = _serviceProvider.GetService<BowlingSystem>();
 
-            var competitionId = sut.RegisterCompetition("Holiday special", new TimePeriod
-            {
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now.AddDays(1)
-            });
+            var player1 = sut.CreatePlayer("Kalle Kallesson", "710101-1111");
+            var player2 = sut.CreatePlayer("Olle Ollesson", "810606-2222");
 
-            var competitions = sut.ListCompetitions();
+            var game = sut.PlayGame(player1, player2, true);
 
-            var competition = competitions.SingleOrDefault(x => x.CompetitionId == competitionId);
-
-            Assert.Equal(competition?.Lane?.PriceRange, LanePriceRange.Pros);
+            Assert.NotEqual(game.Lane, null);
         }
 
         //[Fact]

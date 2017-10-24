@@ -51,7 +51,7 @@ namespace BowlingDbLib
 
         public void Update(GameAccountability game)
         {
-            var accountability = _accountabilities.SingleOrDefault(x => x.GameAccountabilityId == game.GameAccountabilityId);
+            var accountability = _accountabilities.SingleOrDefault(x => x.GameGuid == game.GameGuid);
 
             if(accountability != null)
             {
@@ -64,7 +64,7 @@ namespace BowlingDbLib
         public void Update(Competition competition)
         {
             var competitionLocal = _competitions.SingleOrDefault(
-                x => x.CompetitionId == competition.CompetitionId);
+                x => x.CompetitionGuid == competition.CompetitionGuid);
 
             if(competitionLocal != null)
             {
@@ -76,11 +76,14 @@ namespace BowlingDbLib
             }
         }
 
-        public Competition GetCompetition(int competitionId)
+        public Competition GetCompetition(Guid competitionGuid)
         {
-            return _competitions.Find(x => x.CompetitionId == competitionId);
+            return _competitions.Find(x => x.CompetitionGuid == competitionGuid);
         }
 
-        
+        public void StoreGameRound(Round round)
+        {
+            return;
+        }
     }
 }

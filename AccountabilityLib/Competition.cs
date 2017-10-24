@@ -7,6 +7,13 @@ namespace AccountabilityLib
 {
     public class Competition
     {
+        public Competition()
+        {
+            CompetitionGuid = Guid.NewGuid();
+        }
+
+        public Guid CompetitionGuid { get; set; }
+
         public int CompetitionId { get; set; }
         public string Name { get; set; }
 
@@ -17,7 +24,6 @@ namespace AccountabilityLib
         public PlayerParty PlayerOne { get; set; }
         public PlayerParty PlayerTwo { get; set; }
 
-        public Lane Lane { get; set; }
 
     }
 }

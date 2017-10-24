@@ -84,7 +84,7 @@ namespace BowlingLib
             var factory = new DeluxLaneFactory();
 
             var specialLane = (OakLane)factory.Build(LaneStyle.WildWest);
-
+            
             return specialLane.ConvertToLane();
         }
 
@@ -96,7 +96,7 @@ namespace BowlingLib
             var nextYearStart = new DateTime(year+1, 1, 1);
 
             var accountabilities = _accountabilityContext.AllGames().Where(
-                x => x.TimePoint > yearStart && x.TimePoint < nextYearStart);
+                x => x.TimePoint >= yearStart && x.TimePoint < nextYearStart);
 
             foreach (var party in _partyContext.All())
             {
@@ -120,7 +120,8 @@ namespace BowlingLib
             return _partyContext.Create(name, legalId);
         }
         
-        public GameAccountability PlayGame(PlayerParty player1, PlayerParty player2, bool rigged)
+        public GameAccountability PlayGame(
+            PlayerParty player1, PlayerParty player2, bool rigged, Lane lane = null)
         {
             var rand = new Random();
             PlayerParty winner, looser;
@@ -138,6 +139,8 @@ namespace BowlingLib
 
             var game = _accountabilityContext.AddAccountability(winner, looser, _gameType);
 
+            game.Lane = lane == null ? GetDefaultLane(): lane;
+
             GenerateGameRounds(ref game, winner, looser);
 
             _accountabilityContext.Update(game);
@@ -145,6 +148,11 @@ namespace BowlingLib
             LogGameResult(ref game);
 
             return game;
+        }
+
+        private Lane GetDefaultLane()
+        {
+            return _customLanes.FirstOrDefault();
         }
 
         private void GenerateGameRounds(ref GameAccountability game, PlayerParty winner, PlayerParty looser)
@@ -182,7 +190,7 @@ namespace BowlingLib
 
                 game.Rounds.Add(round);
 
-                _partyContext.StoreGameRound(round);
+                _accountabilityContext.StoreGameRound(round);
 
                 LogRoundScore(ref winner, round.WinnerSerie.Score);
                 LogRoundScore(ref looser, round.LooserSerie.Score);
@@ -201,24 +209,23 @@ namespace BowlingLib
             
         }
 
-        public int RegisterCompetition(string name, TimePeriod period)
+        public Guid RegisterCompetition(string name, TimePeriod period)
         {
             var competition = new Competition
             {
                 Games = new List<GameAccountability>(),
                 Name = name,
                 TimePeriod = period,
-                Lane = _customLanes.FirstOrDefault()
             };
 
             _accountabilityContext.AddCompetition(ref competition);
 
-            return competition.CompetitionId;
+            return competition.CompetitionGuid;
         }
 
-        public bool RegisterCompetitionPlayer(int competitionId, int partyId)
+        public bool RegisterCompetitionPlayer(Guid competitionGuid, int partyId)
         {
-            var competition = _accountabilityContext.GetCompetition(competitionId);
+            var competition = _accountabilityContext.GetCompetition(competitionGuid);
             var party = _partyContext.GetPlayerParty(partyId);
 
             if(competition.PlayerOne == null)
@@ -241,25 +248,28 @@ namespace BowlingLib
             return _accountabilityContext.AllCompetitions();
         }
 
-        public List<GameAccountability> ListMatches(int competitionId)
+        public List<GameAccountability> ListMatches(Guid competitionGuid)
         {
-            return _accountabilityContext.AllGames()
-                .Where( x => x.GameAccountabilityId == competitionId)
-                .ToList();
+            var competition = _accountabilityContext.GetCompetition(competitionGuid);
+
+            return competition.Games;
         }
 
-        public void RunCompetition(int competitionId)
+        public void RunCompetition(Guid competitionGuid)
         {
-            var competition = _accountabilityContext.GetCompetition(competitionId);
+            var competition = _accountabilityContext.GetCompetition(competitionGuid);
             competition.Games = new List<GameAccountability>();
+
+            var lane = GetDefaultLane();
 
             for (int i = 0; i < _competitionGames; i++)
             {
-                var game = PlayGame(competition.PlayerOne, competition.PlayerTwo, true);
+                var game = PlayGame(competition.PlayerOne, competition.PlayerTwo, true, lane);
                 competition.Games.Add(game);
             }
 
             _accountabilityContext.Update(competition);
         }
+        
     }
 }

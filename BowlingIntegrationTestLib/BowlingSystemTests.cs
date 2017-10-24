@@ -26,7 +26,7 @@ namespace BowlingIntegrationTestLib
             var context = new BowlingContext(optionsBuilder.Options);
 
             _serviceProvider = new ServiceCollection()
-                .AddTransient<IBowlingSystem, BowlingSystem>()
+                .AddTransient<BowlingSystem>()
                 .AddTransient<IPartyRepository, SqlPartyRepository>()
                 .AddTransient<IAccountabilityRepository, SqlAccountabilityRepository>()
                 .AddTransient<IAccountRepository, SqlAccountRepository>()
@@ -41,7 +41,7 @@ namespace BowlingIntegrationTestLib
         [Fact]
         public void WinnerOfYear()
         {
-            var sut = _serviceProvider.GetService<IBowlingSystem>();
+            var sut = _serviceProvider.GetService<BowlingSystem>();
 
             var player1 = sut.CreatePlayer("Kalle Kallesson", "710101-1111");
             var player2 = sut.CreatePlayer("Olle Ollesson", "810606-2222");
@@ -57,9 +57,9 @@ namespace BowlingIntegrationTestLib
         [Fact]
         public void PlayCompetition()
         {
-            var sut = _serviceProvider.GetService<IBowlingSystem>();
+            var sut = _serviceProvider.GetService<BowlingSystem>();
 
-            var competitionId = sut.RegisterCompetition("Holiday special", new TimePeriod
+            var competitionGuid = sut.RegisterCompetition("Holiday special", new TimePeriod
             {
                 StartTime = DateTime.Now,
                 EndTime = DateTime.Now.AddDays(1)
@@ -68,14 +68,14 @@ namespace BowlingIntegrationTestLib
             var player1 = sut.CreatePlayer("Kalle Kallesson", "710101-1111");
             var player2 = sut.CreatePlayer("Olle Ollesson", "810606-2222");
 
-            sut.RegisterCompetitionPlayer(competitionId, player1.PlayerPartyId);
-            sut.RegisterCompetitionPlayer(competitionId, player2.PlayerPartyId);
+            sut.RegisterCompetitionPlayer(competitionGuid, player1.PlayerPartyId);
+            sut.RegisterCompetitionPlayer(competitionGuid, player2.PlayerPartyId);
 
-            sut.RunCompetition(competitionId);
+            sut.RunCompetition(competitionGuid);
 
             var competitions = sut.ListCompetitions();
 
-            var competition = competitions.Find(x => x.CompetitionId == competitionId);
+            var competition = competitions.Find(x => x.CompetitionGuid == competitionGuid);
 
             Assert.Equal(competition?.Games.Count, 10);
             Assert.Equal(competition?.Name, "Holiday special");

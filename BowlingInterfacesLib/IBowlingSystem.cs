@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using BowlingDbLib;
+using MeasurementLib;
 
 namespace BowlingInterfacesLib
 {
@@ -12,14 +13,16 @@ namespace BowlingInterfacesLib
 
         PlayerParty CreatePlayer(string name, string legalId);
 
-        GameAccountability PlayGame(PlayerParty player1, PlayerParty player2, bool rigged);
+        GameAccountability PlayGame(PlayerParty player1, PlayerParty player2, bool rigged = false, Lane lane = null);
 
-        int RegisterCompetition(string Name, TimePeriod Period);
+        Guid RegisterCompetition(string Name, TimePeriod Period);
 
-        bool RegisterCompetitionPlayer(int competitionId, int partyId);
-
-        void RunCompetition(int competitionId);
+        bool RegisterCompetitionPlayer(Guid competitionGuid, int partyId);
 
         List<Competition> ListCompetitions();
+
+        List<GameAccountability> ListMatches(Guid competitionGuid);
+
+        void RunCompetition(Guid competitionGuid);
     }
 }

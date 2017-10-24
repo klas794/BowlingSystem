@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\AccountabilityLib\AccountabilityLib.csproj" />
     <ProjectReference Include="..\BowlingDbLib\BowlingDbLib.csproj" />
-    <ProjectReference Include="..\BowlingEnumLib\BowlingEnumLib.csproj" />
   </ItemGroup>
 
 </Project>

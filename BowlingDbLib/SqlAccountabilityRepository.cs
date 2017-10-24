@@ -64,9 +64,19 @@ namespace AccountabilityLib
             return _context.Competitions.ToList();
         }
 
-        public Competition GetCompetition(int competitionId)
+        public Competition GetCompetition(Guid competitionGuid)
         {
-            return _context.Competitions.Find(competitionId);
+            return _context.Competitions.SingleOrDefault(x => x.CompetitionGuid == competitionGuid);
         }
+
+        public void StoreGameRound(Round round)
+        {
+            _context.Add(round.WinnerSerie);
+            _context.Add(round.LooserSerie);
+            _context.Add(round.WinnerSerie.Score);
+            _context.Add(round.LooserSerie.Score);
+            _context.Add(round);
+        }
+
     }
 }

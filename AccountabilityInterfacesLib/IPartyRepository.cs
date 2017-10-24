@@ -16,8 +16,6 @@ namespace AccountabilityInterfacesLib
 
         void Update(PlayerParty player);
 
-        void StoreGameRound(Round round);
-
         PlayerParty GetPlayerParty(int playerPartyId);
 
     }

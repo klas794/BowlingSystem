@@ -48,11 +48,6 @@ namespace BowlingDbLib
             throw new NotImplementedException();
         }
 
-        public void StoreGameRound(Round round)
-        {
-            return;
-        }
-
         public void Update(PlayerParty player)
         {
            
