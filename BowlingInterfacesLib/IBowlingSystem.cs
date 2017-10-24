@@ -15,6 +15,8 @@ namespace BowlingInterfacesLib
 
         GameAccountability PlayGame(PlayerParty player1, PlayerParty player2, bool rigged = false, Lane lane = null);
 
+        Lane GetDefaultLane();
+
         Guid RegisterCompetition(string Name, TimePeriod Period);
 
         bool RegisterCompetitionPlayer(Guid competitionGuid, int partyId);

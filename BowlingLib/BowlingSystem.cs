@@ -123,6 +123,11 @@ namespace BowlingLib
         public GameAccountability PlayGame(
             PlayerParty player1, PlayerParty player2, bool rigged, Lane lane = null)
         {
+            if(player1 == null || player2 == null)
+            {
+                throw new InvalidOperationException("Player(s) unspecified");
+            }
+
             var rand = new Random();
             PlayerParty winner, looser;
 
@@ -142,15 +147,13 @@ namespace BowlingLib
             game.Lane = lane == null ? GetDefaultLane(): lane;
 
             GenerateGameRounds(ref game, winner, looser);
-
-            _accountabilityContext.Update(game);
-
+            
             LogGameResult(ref game);
 
             return game;
         }
 
-        private Lane GetDefaultLane()
+        public Lane GetDefaultLane()
         {
             return _customLanes.FirstOrDefault();
         }

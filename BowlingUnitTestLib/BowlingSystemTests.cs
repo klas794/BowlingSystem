@@ -50,7 +50,9 @@ namespace BowlingUnitTestLib
             var player1 = sut.CreatePlayer("Kalle Kallesson", "710101-1111");
             var player2 = sut.CreatePlayer("Olle Ollesson", "810606-2222");
 
-            var game = sut.PlayGame(player1, player2, true);
+            var lane = sut.GetDefaultLane();
+
+            var game = sut.PlayGame(player1, player2, true, lane);
 
             Assert.NotEqual(game.Lane, null);
         }
