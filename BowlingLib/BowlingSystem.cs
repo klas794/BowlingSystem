@@ -226,10 +226,10 @@ namespace BowlingLib
             return competition.CompetitionGuid;
         }
 
-        public bool RegisterCompetitionPlayer(Guid competitionGuid, int partyId)
+        public bool RegisterCompetitionPlayer(Guid competitionGuid, Guid partyGuid)
         {
             var competition = _accountabilityContext.GetCompetition(competitionGuid);
-            var party = _partyContext.GetPlayerParty(partyId);
+            var party = _partyContext.GetPlayerParty(partyGuid);
 
             if(competition.PlayerOne == null)
             {

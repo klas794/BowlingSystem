@@ -68,8 +68,8 @@ namespace BowlingIntegrationTestLib
             var player1 = sut.CreatePlayer("Kalle Kallesson", "710101-1111");
             var player2 = sut.CreatePlayer("Olle Ollesson", "810606-2222");
 
-            sut.RegisterCompetitionPlayer(competitionGuid, player1.PlayerPartyId);
-            sut.RegisterCompetitionPlayer(competitionGuid, player2.PlayerPartyId);
+            sut.RegisterCompetitionPlayer(competitionGuid, player1.PlayerGuid);
+            sut.RegisterCompetitionPlayer(competitionGuid, player2.PlayerGuid);
 
             sut.RunCompetition(competitionGuid);
 
@@ -77,10 +77,11 @@ namespace BowlingIntegrationTestLib
 
             var competition = competitions.Find(x => x.CompetitionGuid == competitionGuid);
 
-            Assert.Equal(competition?.Games.Count, 10);
-            Assert.Equal(competition?.Name, "Holiday special");
-            Assert.Equal(competition?.PlayerOne, player1);
-            Assert.Equal(competition?.PlayerTwo, player2);
+            Assert.NotEqual(competition, null);
+            Assert.Equal(competition.Games.Count, 10);
+            Assert.Equal(competition.Name, "Holiday special");
+            Assert.Equal(competition.PlayerOne, player1);
+            Assert.Equal(competition.PlayerTwo, player2);
         }
     }
 }

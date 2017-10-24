@@ -5,6 +5,13 @@ namespace AccountabilityLib
 {
     public class PlayerParty
     {
+        public PlayerParty()
+        {
+            PlayerGuid = Guid.NewGuid();
+        }
+
+        public Guid PlayerGuid { get; set; }
+
         public int PlayerPartyId { get; set; }
 
         public string Name { get; set; }

@@ -55,9 +55,9 @@ namespace AccountabilityLib
         }
 
 
-        public PlayerParty GetPlayerParty(int playerPartyId)
+        public PlayerParty GetPlayerParty(Guid playerPartyGuid)
         {
-            return _context.Parties.Find(playerPartyId);
+            return _context.Parties.SingleOrDefault(x => x.PlayerGuid == playerPartyGuid);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace AccountabilityInterfacesLib
 
         void Update(PlayerParty player);
 
-        PlayerParty GetPlayerParty(int playerPartyId);
+        PlayerParty GetPlayerParty(Guid playerPartyId);
 
     }
 }

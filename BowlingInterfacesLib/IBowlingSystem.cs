@@ -19,7 +19,7 @@ namespace BowlingInterfacesLib
 
         Guid RegisterCompetition(string Name, TimePeriod Period);
 
-        bool RegisterCompetitionPlayer(Guid competitionGuid, int partyId);
+        bool RegisterCompetitionPlayer(Guid competitionGuid, Guid partyGuid);
 
         List<Competition> ListCompetitions();
 

@@ -57,6 +57,18 @@ namespace BowlingUnitTestLib
             Assert.NotEqual(game.Lane, null);
         }
 
+        [Fact]
+        public void PlayersMustBeRegistered()
+        {
+            var sut = _serviceProvider.GetService<BowlingSystem>();
+
+            PlayerParty player1 = null;
+            PlayerParty player2 = null;
+
+            Assert.Throws<InvalidOperationException>(() => sut.PlayGame(player1, player2, true));
+
+        }
+
         //[Fact]
         //public void PlayCompetition()
         //{

@@ -61,9 +61,9 @@ namespace BowlingDbLib
             }
         }
 
-        public PlayerParty GetPlayerParty(int playerPartyId)
+        public PlayerParty GetPlayerParty(Guid playerPartyGuid)
         {
-            return _parties.Find(x => x.PlayerPartyId == playerPartyId);
+            return _parties.SingleOrDefault(x => x.PlayerGuid == playerPartyGuid);
         }
     }
 }
