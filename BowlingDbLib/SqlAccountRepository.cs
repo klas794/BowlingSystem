@@ -65,10 +65,11 @@ namespace BowlingDbLib
                 Amount = score.Quantity.Number
             };
 
-            player.ScoreAccount.Entries.Add(entry);
-            
-            _context.Update(player);
             _context.Add(entry);
+
+            player.ScoreAccount.Entries.Add(entry);
+            _context.Update(player);
+
             _context.SaveChanges();
         }
     }

@@ -195,12 +195,12 @@ namespace BowlingLib
 
                 _accountabilityContext.StoreGameRound(round);
 
-                LogRoundScore(ref winner, round.WinnerSerie.Score);
-                LogRoundScore(ref looser, round.LooserSerie.Score);
+                LogRoundScore(winner, round.WinnerSerie.Score);
+                LogRoundScore(looser, round.LooserSerie.Score);
             }
         }
 
-        private void LogRoundScore(ref PlayerParty player, Measurement score)
+        private void LogRoundScore(PlayerParty player, Measurement score)
         {
             _accountContext.AddRoundsScoreEntry(player, score);
         }
