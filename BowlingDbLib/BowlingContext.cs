@@ -1,6 +1,7 @@
 ﻿using AccountabilityLib;
 using AccountLib;
 using FactoryInterfacesLib;
+using FactoryLib;
 using MeasurementLib;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,6 +32,7 @@ namespace BowlingDbLib
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<TimePeriod> TimePeriods { get; set; }
         public DbSet<Lane> Lanes { get; set; }
+        public DbSet<OakLane> OakLanes { get; set; }
     }
 }
 

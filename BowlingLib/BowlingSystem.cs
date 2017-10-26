@@ -30,7 +30,7 @@ namespace BowlingLib
         private PhenomenonType _phenomenonType { get; set; }
 
         private List<Lane> _lanes { get; set; }
-        private List<Lane> _customLanes { get; set; }
+        private List<OakLane> _oakLanes { get; set; }
 
         public BowlingSystem(
             IPartyRepository partyContext, 
@@ -61,7 +61,7 @@ namespace BowlingLib
             _bowlingContext.AccountabilityTypes.Add(_gameType);
             _bowlingContext.Units.Add(_scoreUnit);
             _bowlingContext.PhenomenonTypes.Add(_phenomenonType);
-            _bowlingContext.Lanes.AddRange(_customLanes);
+            _bowlingContext.OakLanes.AddRange(_oakLanes);
             _bowlingContext.Lanes.AddRange(_lanes);
 
             _bowlingContext.SaveChanges();
@@ -73,19 +73,27 @@ namespace BowlingLib
             _scoreUnit = new Unit() { Name = "Points" };
             _phenomenonType = new PhenomenonType { Name = "Score" };
 
+            PrepareLanes();
+        }
+
+        private void PrepareLanes()
+        {
             _lanes = new List<Lane>();
-            _customLanes = new List<Lane>();
-            _customLanes.Add(GetCustomLane());
+            _oakLanes = new List<OakLane>();
+            _oakLanes.Add(GetCustomLane());
             _lanes.Add(new Lane());
         }
 
-        private Lane GetCustomLane()
+        private OakLane GetCustomLane()
         {
             var factory = new DeluxLaneFactory();
 
             var specialLane = (OakLane)factory.Build(LaneStyle.WildWest);
-            
-            return specialLane.ConvertToLane();
+
+            //var specialLane = (OakLane)factory.Build(LaneStyle.WildWest);
+            //return specialLane.ConvertToLane();
+
+            return specialLane;
         }
 
         public PlayerParty WinnerOfYear(int year)
@@ -155,7 +163,7 @@ namespace BowlingLib
 
         public Lane GetDefaultLane()
         {
-            return _customLanes.FirstOrDefault();
+            return _oakLanes.FirstOrDefault()?.ConvertToLane();
         }
 
         private void GenerateGameRounds(ref GameAccountability game, PlayerParty winner, PlayerParty looser)

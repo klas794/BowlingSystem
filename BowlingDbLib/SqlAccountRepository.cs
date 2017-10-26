@@ -61,7 +61,7 @@ namespace BowlingDbLib
         {
             var entry = new RoundsScoreEntry()
             {
-                Account = player.ScoreAccount,
+                ScoreAccount = player.ScoreAccount,
                 Amount = score.Quantity.Number
             };
 
