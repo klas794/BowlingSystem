@@ -163,7 +163,10 @@ namespace BowlingLib
 
         public Lane GetDefaultLane()
         {
-            return _oakLanes.FirstOrDefault()?.ConvertToLane();
+            var defaultLane = _oakLanes.FirstOrDefault();
+
+            return defaultLane == null ? null : defaultLane.ConvertToLane();
+            
         }
 
         private void GenerateGameRounds(ref GameAccountability game, PlayerParty winner, PlayerParty looser)
