@@ -20,8 +20,8 @@ namespace BowlingIntegrationTestLib
         public BowlingSystemTests()
         {
             var optionsBuilder = new DbContextOptionsBuilder<BowlingContext>();
-            //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BengansBowling;Trusted_Connection=True;MultipleActiveResultSets=true");
-            optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BengansBowling;Trusted_Connection=True;MultipleActiveResultSets=true");
+            //optionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
 
             var context = new BowlingContext(optionsBuilder.Options);
 

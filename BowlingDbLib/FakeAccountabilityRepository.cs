@@ -19,12 +19,12 @@ namespace BowlingDbLib
             _competitions = new List<Competition>();
         }
 
-        public GameAccountability AddAccountability(PlayerParty commissioner, PlayerParty responsible, GameAccountabilityType accountabilityType)
+        public GameAccountability AddGameAccountability(PlayerParty playerOne, PlayerParty playerTwo, GameAccountabilityType accountabilityType)
         {
             var accountability = new GameAccountability
             {
-                Winner = commissioner,
-                Looser = responsible,
+                PlayerOne = playerOne,
+                PlayerTwo = playerTwo,
                 GameType = accountabilityType,
                 TimePoint = DateTime.Now
             };

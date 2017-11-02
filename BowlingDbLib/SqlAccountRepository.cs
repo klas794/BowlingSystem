@@ -33,27 +33,27 @@ namespace BowlingDbLib
 
             var transaction = new WinningTransaction() { TimePoint = DateTime.Now };
 
-            var winningEntry = new WinningEntry()
+            var playerOneEntry = new WinningEntry()
             {
-                Account = game.Winner.WinningAccount,
+                Account = game.PlayerOne.WinningAccount,
                 Amount = 1
             };
 
-            var loosingEntry = new WinningEntry()
+            var playerTwoEntry = new WinningEntry()
             {
-                Account = game.Looser.WinningAccount,
+                Account = game.PlayerTwo.WinningAccount,
                 Amount = -1
             };
 
             transaction.Entries = new List<WinningEntry>();
-            transaction.Entries.Add(loosingEntry);
-            transaction.Entries.Add(winningEntry);
+            transaction.Entries.Add(playerOneEntry);
+            transaction.Entries.Add(playerTwoEntry);
 
-            _context.AddRange(loosingEntry, winningEntry);
+            _context.AddRange(playerTwoEntry, playerOneEntry);
             _context.Add(transaction);
 
-            game.Winner.WinningAccount.Entries.Add(winningEntry);
-            game.Looser.WinningAccount.Entries.Add(loosingEntry);
+            game.PlayerOne.WinningAccount.Entries.Add(playerOneEntry);
+            game.PlayerTwo.WinningAccount.Entries.Add(playerTwoEntry);
 
         }
 

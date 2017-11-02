@@ -16,13 +16,13 @@ namespace AccountabilityLib
             _context = context;
         }
 
-        public GameAccountability AddAccountability(PlayerParty winner, PlayerParty looser, GameAccountabilityType accountabilityType)
+        public GameAccountability AddGameAccountability(PlayerParty playerOne, PlayerParty playerTwo, GameAccountabilityType accountabilityType)
         {
             
             var accountability = new GameAccountability
             {
-                Winner = winner,
-                Looser = looser,
+                PlayerOne = playerOne,
+                PlayerTwo = playerTwo,
                 GameType = accountabilityType,
                 TimePoint = DateTime.Now,
             };
@@ -71,10 +71,10 @@ namespace AccountabilityLib
 
         public void StoreGameRound(Round round)
         {
-            _context.Add(round.WinnerSerie);
-            _context.Add(round.LooserSerie);
-            _context.Add(round.WinnerSerie.Score);
-            _context.Add(round.LooserSerie.Score);
+            _context.Add(round.PlayerOneSerie);
+            _context.Add(round.PlayerTwoSerie);
+            _context.Add(round.PlayerOneSerie.Score);
+            _context.Add(round.PlayerTwoSerie.Score);
             _context.Add(round);
         }
 

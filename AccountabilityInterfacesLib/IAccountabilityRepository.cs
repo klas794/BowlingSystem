@@ -6,7 +6,7 @@ namespace AccountabilityInterfacesLib
 {
     public interface IAccountabilityRepository
     {
-        GameAccountability AddAccountability(PlayerParty winner, PlayerParty looser, GameAccountabilityType accountabilityType);
+        GameAccountability AddGameAccountability(PlayerParty winner, PlayerParty looser, GameAccountabilityType accountabilityType);
 
         List<GameAccountability> AllGames();
 

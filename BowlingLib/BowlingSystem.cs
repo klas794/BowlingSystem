@@ -103,16 +103,16 @@ namespace BowlingLib
             var yearStart = new DateTime(year, 1, 1);
             var nextYearStart = new DateTime(year+1, 1, 1);
 
-            var accountabilities = _accountabilityContext.AllGames().Where(
+            var games = _accountabilityContext.AllGames().Where(
                 x => x.TimePoint >= yearStart && x.TimePoint < nextYearStart);
 
             foreach (var party in _partyContext.All())
             {
 
                 if (leader == null ||
-                    accountabilities.Count(x => x.Winner == party)
+                    games.Count(x => x.Winner == party)
                     >
-                    accountabilities.Count(x => x.Winner == leader)
+                    games.Count(x => x.Winner == leader)
                     )
                 {
                     leader = party;
@@ -150,7 +150,7 @@ namespace BowlingLib
                 looser = player1;
             }
 
-            var game = _accountabilityContext.AddAccountability(winner, looser, _gameType);
+            var game = _accountabilityContext.AddGameAccountability(winner, looser, _gameType);
 
             game.Lane = lane == null ? GetDefaultLane(): lane;
 
@@ -177,12 +177,9 @@ namespace BowlingLib
 
             for (int i = 0; i < _gamingRounds; i++)
             {
-                var round = new Round()
-                {
-                    Winner = winner
-                };
+                var round = new Round();
 
-                round.WinnerSerie = new Serie
+                round.PlayerOneSerie = new Serie
                 {
                     Score = new Measurement
                     {
@@ -191,12 +188,12 @@ namespace BowlingLib
                     }
                 };
 
-                round.LooserSerie = new Serie
+                round.PlayerTwoSerie = new Serie
                 {
                     Score = new Measurement
                     {
                         Quantity = new Quantity { Unit = _scoreUnit,
-                            Number = rand.Next(1, round.WinnerSerie.Score.Quantity.Number) },
+                            Number = rand.Next(1, round.PlayerOneSerie.Score.Quantity.Number) },
                         PhenomenonType = _phenomenonType
                     }
                 };
@@ -206,8 +203,8 @@ namespace BowlingLib
 
                 _accountabilityContext.StoreGameRound(round);
 
-                LogRoundScore(winner, round.WinnerSerie.Score);
-                LogRoundScore(looser, round.LooserSerie.Score);
+                LogRoundScore(winner, round.PlayerOneSerie.Score);
+                LogRoundScore(looser, round.PlayerTwoSerie.Score);
             }
         }
 

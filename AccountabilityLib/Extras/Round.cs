@@ -9,10 +9,8 @@ namespace AccountabilityLib
     {
         public int RoundId { get; set; }
 
-        public Serie WinnerSerie { get; set; }
+        public Serie PlayerOneSerie { get; set; }
 
-        public Serie LooserSerie { get; set; }
-
-        public PlayerParty Winner { get; set; }
+        public Serie PlayerTwoSerie { get; set; }
     }
 }
