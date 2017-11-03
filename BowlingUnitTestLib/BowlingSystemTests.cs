@@ -38,7 +38,7 @@ namespace BowlingUnitTestLib
             var game = sut.PlayGame(player1, player2, true);
             Assert.Equal(game.Winner, player1);
 
-            var year = DateTime.Now.Year;
+            var year = game.TimePoint.Year;
             Assert.Equal(sut.WinnerOfYear(year), player1);
         }
 
